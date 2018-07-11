@@ -1,6 +1,20 @@
 <!DOCTYPE html>
-<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" /><meta charset="utf-8">
+<html lang="en">
+<head>
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" /><meta charset="utf-8">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
 <style>
+
+  /* @font-face {
+    font-family: "Open Sans";
+    src:url('OpenSans-Regular.ttf');
+  } */
 
   body {
     /* font: 24px sans-serif; */
@@ -369,7 +383,7 @@ arrow.append('g')
 function changeTitle(title, enterText, source) {
 	d3.select('#title')
 			.text(title)
-      // .style('font-family', 'Open Sans');
+      .style('font-family', 'Open Sans');
 
   d3.select("#text-number")
     .attr('x', function() {
@@ -507,7 +521,7 @@ d3.select('#submit-title').on('click', function() {
   var gif = new GIF({
     workers: 2,
     quality: 1,
-    repeat: 0
+    repeat: -1
   });
 
   gif.on("progress",function(p){
@@ -630,3 +644,4 @@ d3.select('#submit-title').on('click', function() {
 // });
 
 </script>
+</html>

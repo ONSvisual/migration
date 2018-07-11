@@ -1,10 +1,9 @@
-Testing in-browser gif generation from an SVG with [gif.js](https://github.com/jnordberg/gif.js/).  Works in recent Chrome/Safari/Firefox.
+In-browser gif generation for UK migration from an SVG with [gif.js](https://github.com/jnordberg/gif.js/).
 
 Process:
 
-1. Create a standard SVG line chart.
-2. Step through in-between frames of the line chart: for each one, update the SVG, render to an image, add the image element to a stack of gif frames.
-3. Render frames together in the background using gif.js web workers.
-4. When rendering's complete, add the blob URL as an image and start the SVG on an infinite loop with `d3.timer` (gratuitous).
-
-See also: [Gif Globe](http://bl.ocks.org/veltman/03edaa335f93b5a9ee57), [Gif New Jersey](http://bl.ocks.org/veltman/b100d04bda697f95f246)
+1. Install Open Sans on your machine.
+2. Fill in the needed information and click 'Submit'.
+3. Make a cup of tea.
+4. When rendering's complete, right click on the gif and save it.
+5. If you want to render another gif, refresh the page.
