@@ -547,14 +547,15 @@
 
     // change title, text, amount and source
     function changeTitle(title, enterText, source, sub) {
-      d3.select('#title')
-        .attr("text-anchor", "middle")
-        .text(title)
-        .style('font-family', 'Open Sans');
-
-      d3.select('#subtitle')
-        .text(sub)
-        .style('font-family', 'Open Sans');
+      // d3.select('#title')
+      //   .attr("text-anchor", "middle")
+      //   .text(title)
+      //   .style('font-family', 'Open Sans');
+      //
+      // d3.select('#title')
+      //   .append("tspan")
+      //   .text(sub)
+        //.style('font-family', 'Open Sans');
 
       d3.select("#text-number")
         .attr('x', function() {
