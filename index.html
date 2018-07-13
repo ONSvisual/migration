@@ -204,7 +204,7 @@
     // hide migration text on load
     outer.append('text')
       .attr('id', 'migration')
-      .attr('x', 100)
+      .attr('x', 35)
       .attr('y', 380)
       .text('migration')
       .style('font-size', '50px')
@@ -235,7 +235,7 @@
     var chap = d3.select('svg')
       .append('g')
       .attr('id', 'unit')
-      .attr("transform", "translate(" + (600 + margin.left) + "," + (50 + margin.top) + ")");
+      .attr("transform", "translate(" + (600 + margin.left) + "," + (70 + margin.top) + ")");
 
     var legend = d3.select('svg')
       .append('g')
@@ -404,6 +404,8 @@
       }
 
       function drawFrame(t, i) {
+
+        console.log(i)
         // Need to catch 0% and 100%
         // Surely a smarter way to do this
         if (t > duration) {
@@ -435,6 +437,11 @@
             .attr("transform", 'translate(' + ((j * 250) + 700) + ',' + 600 * ymult + ')')
         } else {
           d3.select('#chap' + (calculatedPeople - i)).remove();
+
+          //hack in order to remove last person
+          if(i==calculatedPeople-1) {
+            drawFrame(t, (i+1))
+          }
         }
 
       }
@@ -450,9 +457,9 @@
           if (label === 'Arriving') {
             return 50;
           } else if (label === 'Leaving') {
-            return 190;
+            return 140;
           } else {
-            return 100;
+            return 35;
           }
         })
         .attr('y', function() {
@@ -489,7 +496,7 @@
           if (label === 'Arriving') {
             return "translate(" + (300) + "," + (295) + ")";
           } else if (label === 'Leaving') {
-            return "translate(" + (140) + "," + (335) + ")";
+            return "translate(" + (110) + "," + (335) + ")";
           } else {
             return "translate(" + (300) + "," + (300) + ")";
           }
@@ -547,14 +554,7 @@
 
     // change title, text, amount and source
     function changeTitle(title, enterText, source, sub) {
-      // d3.select('#title')
-      //   .attr("text-anchor", "middle")
-      //   .text(title)
-      //   .style('font-family', 'Open Sans');
-      //
-      // d3.select('#title')
-      //   .append("tspan")
-      //   .text(sub)
+
         //.style('font-family', 'Open Sans');
 
       d3.select("#text-number")
