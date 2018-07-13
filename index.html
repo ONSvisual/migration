@@ -146,21 +146,21 @@
       .attr('x', outerWidth / 2)
       .attr('y', 50)
       .attr("text-anchor", "middle")
-      .text('Estimates are for year ending September 2017')
+      .html('Estimates are for year ending September 2017 <tspan id="subtitle" style="font-size:20px">(provisional)</tspan>')
       .style('font-size', '30px')
       .style('fill', '#e9e3f0')
       .style('font-weight', '600');
 
-    outer.append('text')
-      .attr('id', 'subtitle')
-      .attr('x', outerWidth / 2)
-      .attr('y', 50)
-      .attr('dy', '1.5em')
-      .attr("text-anchor", "middle")
-      .text('(provisional)')
-      .style('font-size', '20px')
-      .style('fill', '#e9e3f0')
-    // .style('font-weight', '600');
+    // outer.append('text')
+    //   .attr('id', 'subtitle')
+    //   .attr('x', outerWidth / 2)
+    //   .attr('y', 50)
+    //   .attr('dy', '1.5em')
+    //   .attr("text-anchor", "middle")
+    //   .text('(provisional)')
+    //   .style('font-size', '20px')
+    //   .style('fill', '#e9e3f0')
+    // // .style('font-weight', '600');
 
     outer.append('text')
       .attr('id', 'text-template')
@@ -266,7 +266,7 @@
       .attr('id', 'source')
       .attr('x', 125)
       .attr('y', 585)
-      .text('Source: ONS')
+      .text('Source: Migration Statistics Quarterly Report, July 2018')
       .style('font-size', '14px')
       // .style('font-family', 'Open Sans')
       .style('fill', '#e9e3f0');
