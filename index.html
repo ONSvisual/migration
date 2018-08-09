@@ -43,7 +43,12 @@
     <br>
     <input id='change-sub' type="text" name="sub" value=""><br> Number:
     <br>
-    <input id='change-text' type="number" name="number" value=""><br><br>
+    <input id='change-text' type="number" name="number" value=""><br>
+    <div id="emigration-wrapper">
+      Emigration:
+      <br>
+      <input id='emigration' type="number" name="number" value="">
+    </div>
     <div id="prefix">
       Prefix:
       <select id="prefix-number">
@@ -84,7 +89,9 @@
       duration = 80,
       columns = 10,
       template = 'Arriving',
-      prefix = '';
+      prefix = '',
+      emigration,
+      emigrationNum;
 
     // SVG
     var outer = d3.select(".svg").append("svg")
@@ -102,6 +109,16 @@
       .attr("width", outerWidth)
       .attr("height", outerHeight)
       .style('fill', '#008080');
+
+    // emigration div
+    var emigrationDiv = d3.select('#emigration-wrapper').style('display', 'none');
+    var emigrationInput = d3.select('#emigration');
+    emigrationInput.on('change', function() {
+      emigrationNum = this.value;
+      emigration = Math.round(this.value / 10000);
+      console.log(emigration)
+    })
+
 
     // change prefix
     var prefixDiv = d3.select('#prefix').style('display', 'none');
@@ -146,7 +163,7 @@
       .attr('x', outerWidth / 2)
       .attr('y', 50)
       .attr("text-anchor", "middle")
-      .html('Estimates are for year ending December 2017 <tspan id="subtitle" style="font-size:20px">(provisional)</tspan>')
+      .html('Estimates are for year ending March 2018 <tspan id="subtitle" style="font-size:20px">(provisional)</tspan>')
       .style('font-size', '30px')
       .style('fill', '#e9e3f0')
       .style('font-weight', '600');
@@ -266,7 +283,7 @@
       .attr('id', 'source')
       .attr('x', 125)
       .attr('y', 585)
-      .text('Source: Migration Statistics Quarterly Report, July 2018')
+      .text('Source: Migration Statistics Quarterly Report, August 2018')
       .style('font-size', '14px')
       // .style('font-family', 'Open Sans')
       .style('fill', '#e9e3f0');
@@ -304,7 +321,7 @@
       d3.select('#unit').selectAll("*").remove();
 
 
-      changeTitle(d3.select('#change-title').property('value'), d3.select('#change-text').property('value'), d3.select('#change-source').property('value'), d3.select('#change-sub').property('value'))
+      changeTitle(d3.select('#change-title').property('value'), d3.select('#change-text').property('value'), d3.select('#change-source').property('value'), d3.select('#change-sub').property('value'), d3.select('#emigration').property('value'))
 
       if (template === 'Leaving') {
         for (i = 0; i < calculatedPeople; i++) {
@@ -356,8 +373,8 @@
 
       // Queue up frames to add to gif stack
       if (template === 'Leaving') {
-        d3.range(calculatedPeople).forEach(function(f) {
-          q.defer(addFrame, f * duration / (calculatedPeople - 1), f);
+        d3.range(emigration).forEach(function(f) {
+          q.defer(addFrame, f * duration / (emigration - 1), f);
         });
       } else {
         d3.range(frames).forEach(function(f) {
@@ -439,7 +456,7 @@
           d3.select('#chap' + (calculatedPeople - i)).remove();
 
           //hack in order to remove last person
-          if(i==calculatedPeople-1) {
+          if(i===emigration-1) {
             drawFrame(t, (i+1))
           }
         }
@@ -549,34 +566,65 @@
       } else {
         prefixDiv.style('display', 'none');
       }
+      // display input for emigration
+      if (template === 'Leaving') {
+        emigrationDiv.style('display', 'block');
+      } else {
+        emigrationDiv.style('display', 'none');
+      }
+
     } //end of function
 
 
     // change title, text, amount and source
-    function changeTitle(title, enterText, source, sub) {
+    function changeTitle(title, enterText, source, sub, emi) {
 
         //.style('font-family', 'Open Sans');
+      if(template === 'Leaving') {
+        d3.select("#text-number")
+          .attr('x', function() {
+            if (prefix === '+') {
+              return 30;
+            } else {
+              return 50;
+            }
+          })
+          .transition()
+          .duration(emigration * 13)
+          .on("start", function repeat() {
+            d3.active(this)
+              .tween("text", function() {
+                var that = d3.select(this),
+                  i = d3.interpolateNumber(0, emi);
+                return function(t) {
+                  that.text(prefix + format(i(t)));
+                };
+              })
+          });
+      } else {
+        d3.select("#text-number")
+          .attr('x', function() {
+            if (prefix === '+') {
+              return 30;
+            } else {
+              return 50;
+            }
+          })
+          .transition()
+          .duration(calculatedPeople * 13)
+          .on("start", function repeat() {
+            d3.active(this)
+              .tween("text", function() {
+                var that = d3.select(this),
+                  i = d3.interpolateNumber(0, enterText);
+                return function(t) {
+                  that.text(prefix + format(i(t)));
+                };
+              })
+          });
 
-      d3.select("#text-number")
-        .attr('x', function() {
-          if (prefix === '+') {
-            return 30;
-          } else {
-            return 50;
-          }
-        })
-        .transition()
-        .duration(calculatedPeople * 13)
-        .on("start", function repeat() {
-          d3.active(this)
-            .tween("text", function() {
-              var that = d3.select(this),
-                i = d3.interpolateNumber(0, enterText);
-              return function(t) {
-                that.text(prefix + format(i(t)));
-              };
-            })
-        });
+      }
+
 
       d3.select('#source')
         .text('Source: ' + source);
