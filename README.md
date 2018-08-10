@@ -9,3 +9,5 @@ Process:
 3. Make a cup of tea.
 4. When rendering's complete, right click on the gif and save it.
 5. If you want to render another gif, refresh the page.
+
+[How to merge gifs in Photoshop](https://github.com/ONSvisual/migration/wiki)
